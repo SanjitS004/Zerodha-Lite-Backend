@@ -16,10 +16,11 @@ module.exports.Signup = async (req, res, next) => {
 
     const token = createSecretToken(user._id);
 
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: true,
-    });
+   res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,         // ✅ Required for HTTPS
+  sameSite: "None",     // ✅ Allows cross-site cookies (frontend ↔ backend)
+});
 
     // Optional: remove password from response
     const { password: _, ...userData } = user._doc;
@@ -62,10 +63,12 @@ module.exports.Login = async (req, res, next) => {
     const token = createSecretToken(user._id);
 
     // 🍪 Set cookie
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: true,
-    });
+  res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,         // ✅ Required for HTTPS
+  sameSite: "None",     // ✅ Allows cross-site cookies (frontend ↔ backend)
+});
+
 
     // ✅ Send user data back (excluding password)
     const { password: _, ...userData } = user._doc;
