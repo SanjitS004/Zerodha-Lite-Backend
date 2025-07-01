@@ -18,9 +18,12 @@ const { UserModel } = require("./models/UserModel");
 
 app.use(
   cors({
-    origin: ["https://zerodha-lite-frontend.onrender.com"], // frontend address
+    origin: [
+      "http://localhost:5173", // for local testing
+      "https://zerodha-lite-frontend.onrender.com", // for deployed frontend
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // important for cookies
+    credentials: true, // ✅ Send and receive cookies
   })
 );
 app.use(bodyParser.json());
